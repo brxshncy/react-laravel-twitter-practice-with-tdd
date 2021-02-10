@@ -91,14 +91,19 @@ class UserTweetTest extends TestCase
     public function test_if_user_can_delete_their_own_tweet () {
 
         $this->withoutExceptionHandling();
-        $user = User::factory()->create();
+
+        $user = User::inRandomOrder()->first();
 
         Passport::actingAs($user);
 
-        $tweet = Tweet::where('user_id', $user->id);
+     
+        $tweet = Tweet::first();
 
+     
         $response = $this->deleteJson( route('destroy.tweet', $tweet->id));
-        $response->assertStatus(200)
+
+        
+        $response->assertStatus(200);
 
     }
 

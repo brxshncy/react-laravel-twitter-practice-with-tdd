@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserFollowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,12 +25,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:api']], function(){
 
     Route::resource('tweet', TweetController::class,[
-      'names' => [
-            'store' => 'post.tweet',
-            'update' => 'update.tweet',
-            'index' => 'index.tweet',
-            'show' => 'show.tweet'
-      ] 
+        'names' => [
+              'store' => 'post.tweet',
+              'update' => 'update.tweet',
+              'index' => 'index.tweet',
+              'show' => 'show.tweet',
+              'destroy' => 'destroy.tweet'
+        ] 
+    ]);
+
+    Route::resource('following', UserFollowController::class, [
+        'names' => [
+            'store' => 'follow.user',
+            'destroy' => 'unfollow.user',
+            'show' => 'view.followUser'
+        ]
     ]);
 });
 

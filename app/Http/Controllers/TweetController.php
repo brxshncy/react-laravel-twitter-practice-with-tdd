@@ -60,8 +60,18 @@ class TweetController extends Controller
     }
 
    
-    public function destroy($id)
+    public function destroy(Tweet $tweet)
     {
-        //
+        $tweet->where('user_id', Auth::user()->id);
+
+        if (true) {
+            
+            $tweet->delete();
+
+            return response()->json([
+                'success' => true
+            ], 200);
+        }
+        
     }
 }
