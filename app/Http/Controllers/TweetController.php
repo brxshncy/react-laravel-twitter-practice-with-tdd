@@ -62,6 +62,7 @@ class TweetController extends Controller
    
     public function destroy(Tweet $tweet)
     {
+       
         $tweet->where('user_id', Auth::user()->id);
 
         if (true) {

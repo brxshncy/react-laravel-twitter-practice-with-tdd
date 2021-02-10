@@ -60,6 +60,7 @@ class UserTweetTest extends TestCase
 
         $response = $this->getJson( route('show.tweet', $tweet->id));
 
+      
         $response->assertStatus(200)
                  ->assertJsonStructure([
                      'data' => ['tweet']

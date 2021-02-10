@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserFollowController extends Controller
 {
@@ -50,11 +51,13 @@ class UserFollowController extends Controller
         //
     }
 
-    public function destroy(User $user)
+    public function destroy(User $following)
     {
+        
       
-        $following = DB::table('following_user')->pluck('id')->toArray();
-        $user->follows()->detatch($following);
+        $follows = DB::table('following_user')->pluck('following_id')->toArray();
+
+        return $following->follows()->detach($follows);
         
         return response()->json([
             'success' => true

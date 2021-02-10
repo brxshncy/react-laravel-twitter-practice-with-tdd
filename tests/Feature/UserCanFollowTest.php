@@ -24,7 +24,6 @@ class UserCanFollowTest extends TestCase
             $user
        ));
 
-      
        $payload = [
            'user_id' => $user->id,
            'following_id' => $following->id
@@ -43,10 +42,15 @@ class UserCanFollowTest extends TestCase
    public function test_if_user_can_unfollow_user ()
    {
         $this->withoutExceptionHandling();
-        $user = User::inRandomOrder()->first();
-        
+        $collectUser = DB::table('following_user')->pluck('user_id')->toArray();
+       
+        $user = User::findOrFail(array_rand($collectUser));
         Passport::actingAs(($user));
-        $response = $this->getJson(route('unfollow.user', $user->id));
+
+     
+        $response = $this->deleteJson(route('unfollow.user', $user->id));
+
+      
 
         $response->assertStatus(200);
 
